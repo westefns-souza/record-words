@@ -5,6 +5,8 @@ import java.sql.Timestamp;
 public class RecordWord {
     private int Id;
     private String word;
+    private String classification;
+    private String translation;
     private Timestamp createdAt;
 
     public int getId() {
@@ -21,6 +23,22 @@ public class RecordWord {
 
     public void setWord(String word) {
         this.word = word;
+    }
+
+    public String getClassification() {
+        return classification;
+    }
+
+    public void setClassification(String classification) {
+        this.classification = classification;
+    }
+
+    public String getTranslation() {
+        return translation;
+    }
+
+    public void setTranslation(String translation) {
+        this.translation = translation;
     }
 
     public Timestamp getCreatedAt() {
