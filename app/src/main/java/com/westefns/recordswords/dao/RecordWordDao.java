@@ -36,11 +36,15 @@ public class RecordWordDao {
         while (cursor.moveToNext()) {
             int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
             String word = cursor.getString(cursor.getColumnIndexOrThrow("word"));
+            String classification = cursor.getString(cursor.getColumnIndexOrThrow("classification"));
+            String translation = cursor.getString(cursor.getColumnIndexOrThrow("translation"));
             Timestamp created_at = Timestamp.valueOf(cursor.getString(cursor.getColumnIndexOrThrow("created_at")));
 
             RecordWord recordWord = new RecordWord();
             recordWord.setId(id);
             recordWord.setWord(word);
+            recordWord.setClassification(classification);
+            recordWord.setTranslation(translation);
             recordWord.setCreatedAt(created_at);
 
             listRecordsWord.add(recordWord);
@@ -54,6 +58,8 @@ public class RecordWordDao {
     public boolean create(RecordWord recordWord) {
         ContentValues cv = new ContentValues();
         cv.put("word", recordWord.getWord());
+        cv.put("classification", recordWord.getClassification());
+        cv.put("translation", recordWord.getTranslation());
 
         try {
             write.insert(DBHelper.TABLE_WORDS, null, cv);
@@ -71,6 +77,8 @@ public class RecordWordDao {
     public boolean update(RecordWord recordWord) {
         ContentValues cv = new ContentValues();
         cv.put("word", recordWord.getWord());
+        cv.put("classification", recordWord.getClassification());
+        cv.put("translation", recordWord.getTranslation());
 
         try {
             write.update(DBHelper.TABLE_WORDS, cv, "id = ?", new String[] { String.valueOf(recordWord.getId()) });
