@@ -23,6 +23,8 @@ public class DBHelper extends SQLiteOpenHelper {
         String sql = "CREATE TABLE IF NOT EXISTS " + TABLE_WORDS
                 + "(id INTERGER PRIMARY KEY AUTOINCREMENT NOT NULL, "
                 + "word VARCAHR(50) NOT NULL, "
+                + "classification VARCAHR(50) NOT NULL, "
+                + "translation VARCAHR(50) NOT NULL, "
                 + "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);";
 
         try {
