@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -47,5 +48,20 @@ public class MainActivity extends AppCompatActivity {
         WordAdapter adapter = new WordAdapter(this, listRecordWords);
 
         lvRecordsWords.setAdapter(adapter);
+
+        lvRecordsWords.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                RecordWord recordWord = (RecordWord) parent.getItemAtPosition(position);
+
+                Intent it = new Intent(getApplicationContext(), DetailsRecordWord.class);
+
+                it.putExtra("recordWord", recordWord);
+
+                startActivity(it);
+            }
+
+        });
     }
 }
