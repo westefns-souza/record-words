@@ -27,25 +27,25 @@ public class RecordWordDao {
     public List<RecordWord> getAllRecordsWord(){
         List<RecordWord> listRecordsWord = new ArrayList<>();
 
-        String sql = "SELECT * FROM " + DBHelper.TABLE_WORDS + ";";
+        String sql = "SELECT * FROM " + DBHelper.TABLE_WORDS;
 
         Cursor cursor = read.rawQuery(sql, null);
 
         cursor.moveToFirst();
 
         while (cursor.moveToNext()) {
-            int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+            Long id = cursor.getLong(cursor.getColumnIndexOrThrow("id"));
             String word = cursor.getString(cursor.getColumnIndexOrThrow("word"));
             String classification = cursor.getString(cursor.getColumnIndexOrThrow("classification"));
             String translation = cursor.getString(cursor.getColumnIndexOrThrow("translation"));
-            Timestamp created_at = Timestamp.valueOf(cursor.getString(cursor.getColumnIndexOrThrow("created_at")));
+            Timestamp create_at = Timestamp.valueOf(cursor.getString(cursor.getColumnIndexOrThrow("create_at")));
 
             RecordWord recordWord = new RecordWord();
             recordWord.setId(id);
             recordWord.setWord(word);
             recordWord.setClassification(classification);
             recordWord.setTranslation(translation);
-            recordWord.setCreatedAt(created_at);
+            recordWord.setCreateAt(create_at);
 
             listRecordsWord.add(recordWord);
         }
@@ -56,13 +56,13 @@ public class RecordWordDao {
     }
 
     public boolean create(RecordWord recordWord) {
-        ContentValues cv = new ContentValues();
-        cv.put("word", recordWord.getWord());
-        cv.put("classification", recordWord.getClassification());
-        cv.put("translation", recordWord.getTranslation());
-
+        final String SQL_CREATE = "INSERT INTO " + DBHelper.TABLE_WORDS + " (word, classification, translation) " +
+                "VALUES ('"
+                    + recordWord.getWord() + "', '"
+                    + recordWord.getClassification() + "', '"
+                    + recordWord.getTranslation() + "')";
         try {
-            write.insert(DBHelper.TABLE_WORDS, null, cv);
+            write.execSQL(SQL_CREATE);
 
             Log.i("Info", "Palavra salva no banco de dados!");
 
@@ -75,13 +75,15 @@ public class RecordWordDao {
     }
 
     public boolean update(RecordWord recordWord) {
-        ContentValues cv = new ContentValues();
-        cv.put("word", recordWord.getWord());
-        cv.put("classification", recordWord.getClassification());
-        cv.put("translation", recordWord.getTranslation());
+        final String SQL_UPDATE = "UPDATE " + DBHelper.TABLE_WORDS + " (word, classification, translation) " +
+                "SET '"
+                + "word = " + recordWord.getWord() + "', "
+                + "classification = " + recordWord.getClassification() + "', "
+                + "translation = " + recordWord.getTranslation()
+                + "WHERE id = " + recordWord.getId();
 
         try {
-            write.update(DBHelper.TABLE_WORDS, cv, "id = ?", new String[] { String.valueOf(recordWord.getId()) });
+            write.execSQL(SQL_UPDATE);
 
             Log.i("Info", "Palavra atualizada no banco de dados!");
 
@@ -94,8 +96,11 @@ public class RecordWordDao {
     }
 
     public boolean delete(RecordWord recordWord) {
+        final String SQL_UPDATE = "DELETE " + DBHelper.TABLE_WORDS
+                + "WHERE id = " + recordWord.getId();
+
         try {
-            write.delete("PESSOA", "ID = ?", new String[]{String.valueOf(recordWord.getId())});
+            write.execSQL(SQL_UPDATE);
 
             Log.i("Info", "Palavra deletada do banco de dados!");
 
