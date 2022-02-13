@@ -74,11 +74,11 @@ public class RecordWordDao {
     }
 
     public boolean update(RecordWord recordWord) {
-        final String SQL_UPDATE = "UPDATE " + DBHelper.TABLE_WORDS + " (word, classification, translation) " +
-                "SET '"
-                + "word = " + recordWord.getWord() + "', "
-                + "classification = " + recordWord.getClassification() + "', "
-                + "translation = " + recordWord.getTranslation()
+        final String SQL_UPDATE = "UPDATE " + DBHelper.TABLE_WORDS
+                + " SET "
+                + "word = '" + recordWord.getWord() + "', "
+                + "classification = '" + recordWord.getClassification() + "', "
+                + "translation = '" + recordWord.getTranslation() + "' "
                 + "WHERE id = " + recordWord.getId();
 
         try {
