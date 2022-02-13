@@ -96,8 +96,8 @@ public class RecordWordDao {
     }
 
     public boolean delete(RecordWord recordWord) {
-        final String SQL_UPDATE = "DELETE " + DBHelper.TABLE_WORDS
-                + "WHERE id = " + recordWord.getId();
+        final String SQL_UPDATE = "DELETE FROM " + DBHelper.TABLE_WORDS
+                + " WHERE id = " + recordWord.getId();
 
         try {
             write.execSQL(SQL_UPDATE);
