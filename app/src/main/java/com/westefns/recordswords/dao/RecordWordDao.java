@@ -3,11 +3,15 @@ package com.westefns.recordswords.dao;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.util.Log;
+
+import androidx.annotation.RequiresApi;
 
 import com.westefns.recordswords.model.RecordWord;
 import com.westefns.recordswords.util.DBHelper;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -125,5 +129,24 @@ public class RecordWordDao {
 
             return false;
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public boolean getHaveWordToday() {
+        String data = java.time.LocalDate.now().toString();
+
+        String sql = "SELECT TOP 1 id FROM " + DBHelper.TABLE_WORDS + " WHERE create_at >= '" + data + " 00:00:00'";
+
+        Cursor cursor = read.rawQuery(sql, null);
+
+        cursor.moveToFirst();
+
+        boolean haveWordToday = false;
+
+        while (cursor.moveToNext()) {
+            haveWordToday = true;
+        }
+
+        return haveWordToday;
     }
 }

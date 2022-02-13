@@ -1,8 +1,14 @@
 package com.westefns.recordswords;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,6 +19,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.westefns.recordswords.dao.PhraseExampleDao;
 import com.westefns.recordswords.dao.RecordWordDao;
 import com.westefns.recordswords.model.RecordWord;
+import com.westefns.recordswords.services.AlertService;
 import com.westefns.recordswords.util.WordAdapter;
 
 import java.util.ArrayList;
@@ -32,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        startService(new Intent(this, MainActivity.class));
+
         recordWordDao = new RecordWordDao(MainActivity.this);
         phraseExampleDao = new PhraseExampleDao(MainActivity.this);
 
