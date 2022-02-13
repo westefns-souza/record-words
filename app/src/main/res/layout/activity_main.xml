@@ -7,6 +7,16 @@
     tools:context=".MainActivity"
     android:layout_margin="16dp">
 
+    <TextView
+        android:id="@+id/tvNoWords"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Você ainda não salvou nenhuma palavra"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/lvRecordsWords" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddNewRecordWord"
         android:layout_width="wrap_content"
@@ -24,9 +34,13 @@
         android:id="@+id/lvRecordsWords"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+    </ListView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

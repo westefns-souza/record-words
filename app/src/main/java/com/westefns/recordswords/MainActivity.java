@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.westefns.recordswords.dao.RecordWordDao;
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     FloatingActionButton fabAddNewRecordWord;
     ListView lvRecordsWords;
+    TextView tvNoWords;
 
     List<RecordWord> listRecordWords = new ArrayList<>();
 
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         fabAddNewRecordWord = findViewById(R.id.fabAddNewRecordWord);
         lvRecordsWords = findViewById(R.id.lvRecordsWords);
+        tvNoWords = findViewById(R.id.tvNoWords);
 
         fabAddNewRecordWord.setOnClickListener(v -> {
             Intent it = new Intent(getApplicationContext(), NewRecordWordActivity.class);
@@ -41,18 +44,26 @@ public class MainActivity extends AppCompatActivity {
 
         listRecordWords = recordWordDao.getAllRecordsWord();
 
-        WordAdapter adapter = new WordAdapter(this, listRecordWords);
+        if (listRecordWords.isEmpty()) {
+            tvNoWords.setVisibility(View.VISIBLE);
+            lvRecordsWords.setVisibility(View.INVISIBLE);
+        } else {
+            tvNoWords.setVisibility(View.INVISIBLE);
+            lvRecordsWords.setVisibility(View.VISIBLE);
 
-        lvRecordsWords.setAdapter(adapter);
+            WordAdapter adapter = new WordAdapter(this, listRecordWords);
 
-        lvRecordsWords.setOnItemClickListener((parent, view, position, id) -> {
-            RecordWord recordWord = (RecordWord) parent.getItemAtPosition(position);
+            lvRecordsWords.setAdapter(adapter);
 
-            Intent it = new Intent(getApplicationContext(), DetailsRecordWordActivity.class);
+            lvRecordsWords.setOnItemClickListener((parent, view, position, id) -> {
+                RecordWord recordWord = (RecordWord) parent.getItemAtPosition(position);
 
-            it.putExtra("recordWord", recordWord);
+                Intent it = new Intent(getApplicationContext(), DetailsRecordWordActivity.class);
 
-            startActivity(it);
-        });
+                it.putExtra("recordWord", recordWord);
+
+                startActivity(it);
+            });
+        }
     }
 }
