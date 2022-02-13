@@ -1,12 +1,11 @@
 package com.westefns.recordswords;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.westefns.recordswords.dao.RecordWordDao;
 import com.westefns.recordswords.model.RecordWord;
@@ -46,16 +45,9 @@ public class DetailsRecordWord extends AppCompatActivity {
 
         txDetailsCreatAt.setText("Cadastrado em: " + createAt);
 
-        btnDetailsDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boolean recordDeleted = recordWordDao.delete(recordWord);
-
-                if (recordDeleted) {
-                    Intent it = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(it);
-                }
-            }
+        btnDetailsDelete.setOnClickListener(v -> {
+            AlertDialogConfirmDelete dialog = new AlertDialogConfirmDelete(recordWordDao, recordWord);
+            dialog.show(getSupportFragmentManager(), "DeleteWord");
         });
     }
 }
