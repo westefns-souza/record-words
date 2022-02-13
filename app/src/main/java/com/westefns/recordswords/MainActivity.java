@@ -14,6 +14,7 @@ import android.widget.ListView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.westefns.recordswords.dao.RecordWordDao;
 import com.westefns.recordswords.model.RecordWord;
+import com.westefns.recordswords.util.WordAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         listRecordWords = recordWordDao.getAllRecordsWord();
 
-        ArrayAdapter<RecordWord> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listRecordWords);
+        WordAdapter adapter = new WordAdapter(this, listRecordWords);
 
         lvRecordsWords.setAdapter(adapter);
     }
