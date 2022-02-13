@@ -13,6 +13,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static String DBNAME = "db_records_words.db";
 
     public static String TABLE_WORDS = "words";
+    public static String TABLE_PHRASEEXAMPLE = "phrase_exemple";
 
     private static final String SQL_CREATE_TABLE_WORDS = "CREATE TABLE IF NOT EXISTS " + TABLE_WORDS
                 + " (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "
@@ -21,8 +22,17 @@ public class DBHelper extends SQLiteOpenHelper {
                 + "translation VARCHAR(50) NOT NULL, "
                 + "create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL)";
 
-    private static final String SQL_DROP =
+    private static final String SQL_CREATE_TABLE_PHRASEEXAMPLE = "CREATE TABLE IF NOT EXISTS " + TABLE_PHRASEEXAMPLE
+            + " (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "
+            + "idword INTEGER NOT NULL, "
+            + "phrase VARCHAR(100) NOT NULL, "
+            + "create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL)";
+
+    private static final String SQL_DROP_TABLE_WORDS =
             "DROP TABLE IF EXISTS " + TABLE_WORDS;
+
+    private static final String SQL_DROP_TABLE_PHRASEEXAMPLE =
+            "DROP TABLE IF EXISTS " + TABLE_PHRASEEXAMPLE;
 
     public DBHelper(@Nullable Context context) {
         super(context, DBNAME, null, VERSION);
@@ -32,6 +42,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         try {
             db.execSQL(SQL_CREATE_TABLE_WORDS);
+            db.execSQL(SQL_CREATE_TABLE_PHRASEEXAMPLE);
 
             Log.i("WORD DB", "Sucesso ao criar o banco de dados!");
         } catch (Exception e) {
@@ -42,7 +53,9 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         try {
-            db.execSQL(SQL_DROP);
+            db.execSQL(SQL_DROP_TABLE_WORDS);
+            db.execSQL(SQL_DROP_TABLE_PHRASEEXAMPLE);
+
             onCreate(db);
         } catch (Exception e) {
             Log.i("WORD DB", "Erro ao apagar as tabelas!");
