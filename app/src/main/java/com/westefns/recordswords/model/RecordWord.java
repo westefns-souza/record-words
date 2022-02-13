@@ -3,17 +3,17 @@ package com.westefns.recordswords.model;
 import java.sql.Timestamp;
 
 public class RecordWord {
-    private int Id;
+    private Long Id;
     private String word;
     private String classification;
     private String translation;
-    private Timestamp createdAt;
+    private Timestamp createAt;
 
-    public int getId() {
+    public Long getId() {
         return Id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         Id = id;
     }
 
@@ -41,11 +41,16 @@ public class RecordWord {
         this.translation = translation;
     }
 
-    public Timestamp getCreatedAt() {
-        return createdAt;
+    public Timestamp getCreateAt() {
+        return createAt;
     }
 
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
+    public void setCreateAt(Timestamp createAt) {
+        this.createAt = createAt;
+    }
+
+    @Override
+    public String toString() {
+        return word;
     }
 }
