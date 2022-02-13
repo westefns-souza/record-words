@@ -1,8 +1,9 @@
 package com.westefns.recordswords.model;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class RecordWord {
+public class RecordWord implements Serializable {
     private Long Id;
     private String word;
     private String classification;
