@@ -10,6 +10,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.westefns.recordswords.dao.PhraseExampleDao;
 import com.westefns.recordswords.dao.RecordWordDao;
 import com.westefns.recordswords.model.RecordWord;
 import com.westefns.recordswords.util.WordAdapter;
@@ -18,19 +19,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    RecordWordDao recordWordDao;
+    private RecordWordDao recordWordDao;
+    private PhraseExampleDao phraseExampleDao;
 
-    FloatingActionButton fabAddNewRecordWord;
-    ListView lvRecordsWords;
-    TextView tvNoWords;
+    private FloatingActionButton fabAddNewRecordWord;
+    private ListView lvRecordsWords;
+    private TextView tvNoWords;
 
-    List<RecordWord> listRecordWords = new ArrayList<>();
+    private List<RecordWord> listRecordWords = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         recordWordDao = new RecordWordDao(MainActivity.this);
+        phraseExampleDao = new PhraseExampleDao(MainActivity.this);
 
         fabAddNewRecordWord = findViewById(R.id.fabAddNewRecordWord);
         lvRecordsWords = findViewById(R.id.lvRecordsWords);
@@ -57,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
             lvRecordsWords.setOnItemClickListener((parent, view, position, id) -> {
                 RecordWord recordWord = (RecordWord) parent.getItemAtPosition(position);
+                recordWord.setFrases(phraseExampleDao.getAllPhrasesByWord(recordWord.getWord()));
 
                 Intent it = new Intent(getApplicationContext(), DetailsRecordWordActivity.class);
 

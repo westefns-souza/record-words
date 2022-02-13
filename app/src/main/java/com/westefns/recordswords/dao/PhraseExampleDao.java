@@ -22,10 +22,10 @@ public class PhraseExampleDao {
         read = db.getReadableDatabase();
     }
 
-    public List<PhraseExample> getAllPhrasesByWordId(Long id){
+    public List<PhraseExample> getAllPhrasesByWord(String word) {
         List<PhraseExample> listPhraseExample = new ArrayList<>();
 
-        String sql = "SELECT * FROM " + DBHelper.TABLE_PHRASEEXAMPLE + " WHERE idword = " + id;
+        String sql = "SELECT * FROM " + DBHelper.TABLE_PHRASEEXAMPLE + " WHERE word = '" + word + "'";
 
         Cursor cursor = read.rawQuery(sql, null);
 
@@ -38,7 +38,7 @@ public class PhraseExampleDao {
 
             PhraseExample phraseExample = new PhraseExample();
             phraseExample.setId(idphrase);
-            phraseExample.setRecordWordId(id);
+            phraseExample.setRecordWord(word);
             phraseExample.setExemple(phrase);
             phraseExample.setCreateAt(create_at);
 
@@ -51,9 +51,9 @@ public class PhraseExampleDao {
     }
 
     public boolean create(PhraseExample phraseExample) {
-        final String SQL_CREATE = "INSERT INTO " + DBHelper.TABLE_PHRASEEXAMPLE + " (idword, phrase) " +
-                "VALUES ("
-                + phraseExample.getRecordWordId() + ", '"
+        final String SQL_CREATE = "INSERT INTO " + DBHelper.TABLE_PHRASEEXAMPLE + " (word, phrase) " +
+                "VALUES ('"
+                + phraseExample.getRecordWord() + "', '"
                 + phraseExample.getExemple() + "')";
 
         try {
@@ -89,11 +89,28 @@ public class PhraseExampleDao {
     }
 
     public boolean delete(PhraseExample phraseExample) {
-        final String SQL_UPDATE = "DELETE FROM " + DBHelper.TABLE_PHRASEEXAMPLE
+        final String SQL_DELETE = "DELETE FROM " + DBHelper.TABLE_PHRASEEXAMPLE
                 + " WHERE id = " + phraseExample.getId();
 
         try {
-            write.execSQL(SQL_UPDATE);
+            write.execSQL(SQL_DELETE);
+
+            Log.i("Info", "Frase deletada do banco de dados!");
+
+            return true;
+        } catch (Exception e) {
+            Log.i("Info", "Erro ao deletar a frase do banco de dados!");
+
+            return false;
+        }
+    }
+
+    public boolean delete(String word) {
+        final String SQL_DELETE = "DELETE FROM " + DBHelper.TABLE_PHRASEEXAMPLE
+                + " WHERE word = '" + word + "'";
+
+        try {
+            write.execSQL(SQL_DELETE);
 
             Log.i("Info", "Frase deletada do banco de dados!");
 

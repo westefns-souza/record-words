@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.westefns.recordswords.R;
+import com.westefns.recordswords.model.PhraseExample;
 import com.westefns.recordswords.model.RecordWord;
 
 import java.util.List;
@@ -52,3 +53,7 @@ public class WordAdapter extends BaseAdapter {
         return convertView;
     }
 }
+
+
+
+

@@ -54,6 +54,22 @@ public class RecordWordDao {
         return listRecordsWord;
     }
 
+    public Long getIdByWord(String word) {
+        String sql = "SELECT id FROM " + DBHelper.TABLE_WORDS + " WHERE word LIKE '" + word + "'";
+
+        Cursor cursor = read.rawQuery(sql, null);
+
+        cursor.moveToFirst();
+
+        Long id = 0l;
+
+        while (cursor.moveToNext()) {
+            id = cursor.getLong(cursor.getColumnIndexOrThrow("id"));
+        }
+
+        return id;
+    }
+
     public boolean create(RecordWord recordWord) {
         final String SQL_CREATE = "INSERT INTO " + DBHelper.TABLE_WORDS + " (word, classification, translation) " +
                 "VALUES ('"

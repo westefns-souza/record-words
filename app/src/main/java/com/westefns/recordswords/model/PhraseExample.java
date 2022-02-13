@@ -1,10 +1,11 @@
 package com.westefns.recordswords.model;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class PhraseExample {
+public class PhraseExample implements Serializable {
     private Long Id;
-    private Long RecordWordId;
+    private String Word;
     private String Exemple;
     private Timestamp createAt;
 
@@ -16,12 +17,12 @@ public class PhraseExample {
         Id = id;
     }
 
-    public Long getRecordWordId() {
-        return RecordWordId;
+    public String getRecordWord() {
+        return Word;
     }
 
-    public void setRecordWordId(Long recordWordId) {
-        RecordWordId = recordWordId;
+    public void setRecordWord(String word) {
+        Word = word;
     }
 
     public String getExemple() {

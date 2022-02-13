@@ -2,6 +2,8 @@ package com.westefns.recordswords.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RecordWord implements Serializable {
     private Long Id;
@@ -9,6 +11,7 @@ public class RecordWord implements Serializable {
     private String classification;
     private String translation;
     private Timestamp createAt;
+    private List<PhraseExample> frases = new ArrayList<>();
 
     public Long getId() {
         return Id;
@@ -48,6 +51,14 @@ public class RecordWord implements Serializable {
 
     public void setCreateAt(Timestamp createAt) {
         this.createAt = createAt;
+    }
+
+    public List<PhraseExample> getPhrases() {
+        return frases;
+    }
+
+    public void setFrases(List<PhraseExample> frases) {
+        this.frases = frases;
     }
 
     @Override

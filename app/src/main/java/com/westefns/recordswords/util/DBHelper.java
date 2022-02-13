@@ -24,7 +24,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private static final String SQL_CREATE_TABLE_PHRASEEXAMPLE = "CREATE TABLE IF NOT EXISTS " + TABLE_PHRASEEXAMPLE
             + " (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "
-            + "idword INTEGER NOT NULL, "
+            + "word VARCHAR(100) NOT NULL, "
             + "phrase VARCHAR(100) NOT NULL, "
             + "create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL)";
 

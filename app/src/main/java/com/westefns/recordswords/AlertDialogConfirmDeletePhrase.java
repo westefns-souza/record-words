@@ -1,5 +1,6 @@
 package com.westefns.recordswords;
 
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
@@ -10,17 +11,15 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
 import com.westefns.recordswords.dao.PhraseExampleDao;
-import com.westefns.recordswords.dao.RecordWordDao;
 import com.westefns.recordswords.model.PhraseExample;
-import com.westefns.recordswords.model.RecordWord;
 
-public class AlertDialogConfirmDelete extends AppCompatDialogFragment {
-    private RecordWordDao recordWordDao;
-    private RecordWord recordWord;
+public class AlertDialogConfirmDeletePhrase extends AppCompatDialogFragment {
+    private final PhraseExampleDao phraseExampleDao;
+    private final PhraseExample phraseExample;
 
-    public AlertDialogConfirmDelete(RecordWordDao recordWordDao, RecordWord recordWord) {
-        this.recordWordDao = recordWordDao;
-        this.recordWord = recordWord;
+    public AlertDialogConfirmDeletePhrase(PhraseExampleDao phraseExampleDao, PhraseExample phraseExample) {
+        this.phraseExampleDao = phraseExampleDao;
+        this.phraseExample = phraseExample;
     }
 
     @NonNull
@@ -29,17 +28,15 @@ public class AlertDialogConfirmDelete extends AppCompatDialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         builder
-                .setMessage("Tem certeza que quer deletar essa palavra?")
+                .setMessage("Tem certeza que quer deletar essa frase?")
                 .setPositiveButton("Sim, Deletar", (dialog, id) -> {
-                    boolean recordDeleted = recordWordDao.delete(recordWord);
+                    boolean recordDeleted = phraseExampleDao.delete(phraseExample);
 
                     if (recordDeleted) {
                         Intent it = new Intent(getActivity(), MainActivity.class);
                         startActivity(it);
                     }
-                }).setNegativeButton("Não Deletar", (dialog, id) -> {
-                    dialog.dismiss();
-                });
+                }).setNegativeButton("Não Deletar", (dialog, id) -> dialog.dismiss());
 
         return builder.create();
     }
