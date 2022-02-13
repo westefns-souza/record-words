@@ -10,7 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RecordsWords">
         <activity
-            android:name=".DetailsRecordWord"
+            android:name=".EditRecordWordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DetailsRecordWordActivity"
             android:exported="false" />
         <activity
             android:name=".WordItem"

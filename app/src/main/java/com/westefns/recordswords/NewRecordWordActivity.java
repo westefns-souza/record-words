@@ -24,7 +24,7 @@ public class NewRecordWordActivity extends AppCompatActivity {
 
     Button btnSave;
 
-    private String[] classifications = { "Verbo", "Substantivo", "Artigo" };
+    public static final String[] classifications = { "Verbo", "Substantivo", "Artigo" };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -3,13 +3,9 @@ package com.westefns.recordswords;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -49,19 +45,14 @@ public class MainActivity extends AppCompatActivity {
 
         lvRecordsWords.setAdapter(adapter);
 
-        lvRecordsWords.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lvRecordsWords.setOnItemClickListener((parent, view, position, id) -> {
+            RecordWord recordWord = (RecordWord) parent.getItemAtPosition(position);
 
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                RecordWord recordWord = (RecordWord) parent.getItemAtPosition(position);
+            Intent it = new Intent(getApplicationContext(), DetailsRecordWordActivity.class);
 
-                Intent it = new Intent(getApplicationContext(), DetailsRecordWord.class);
+            it.putExtra("recordWord", recordWord);
 
-                it.putExtra("recordWord", recordWord);
-
-                startActivity(it);
-            }
-
+            startActivity(it);
         });
     }
 }
